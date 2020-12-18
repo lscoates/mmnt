@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :track do
-    name { "Career" }
+    name { Faker::Mountain.name }
     user
   end
 end

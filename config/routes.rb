@@ -6,4 +6,6 @@ Rails.application.routes.draw do
     get 'signup', to: 'devise/registrations#new'
     get 'logout', to: 'devise/sessions#destroy'
   end
+
+  resources :tracks, only: [:index]
 end
