@@ -24,4 +24,39 @@ describe TracksController, type: :controller do
       expect(assigns(:tracks)).to match([track1, track2])
     end
   end
+
+  describe "POST create" do
+    let(:user) { create(:user) }
+
+    before { sign_in user }
+
+    context "when the params are valid" do
+      let(:params) do
+        {
+          name: "Career",
+        }
+      end
+
+      it "creates a new track" do
+        expect { post :create, params: { track: params, format: :json  } }
+          .to change { user.tracks.count }.by(1)
+        expect(response.status).to eql(201)
+      end
+    end
+
+    context "when the params are invalid" do
+      let(:params) do
+        {
+          name: "",
+        }
+      end
+
+      it "returns an error" do
+        expect { post :create, params: { track: params, format: :json  } }
+          .not_to change { user.tracks.count }
+        expect(response.status).to eql(422)
+        expect(JSON.parse(response.body)["errors"].size).to eql(1)
+      end
+    end
+  end
 end
