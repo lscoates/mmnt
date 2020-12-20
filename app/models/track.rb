@@ -3,6 +3,6 @@ class Track < ApplicationRecord
   belongs_to :user
 
   # Validations
+  validates_presence_of :user, :name
   validates_uniqueness_of :name, scope: :user_id
-  validates_presence_of :user
 end

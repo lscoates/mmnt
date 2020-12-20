@@ -18,6 +18,16 @@ describe Track, "validations" do
       expect(new_track).to be_valid
     end
 
+    it "is invalid when the name is missing" do
+      new_track = Track.new(name: nil, user: user1)
+      expect(new_track).to be_invalid
+    end
+
+    it "is invalid when the name is an empty string" do
+      new_track = Track.new(name: "", user: user1)
+      expect(new_track).to be_invalid
+    end
+
     it "is invalid when the name is in use by the same user" do
       new_track = Track.new(name: "Career", user: user1)
       expect(new_track).to be_invalid
