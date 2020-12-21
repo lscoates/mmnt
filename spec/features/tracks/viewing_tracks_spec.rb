@@ -22,7 +22,7 @@ feature "Viewing a user's tracks", type: :feature do
 
       assert_text(:visible, "Career")
       assert_text(:visible, "Family")
-      assert_text(:not_visible, "Hobbies")
+      assert_no_text("Hobbies")
     end
   end
 end
