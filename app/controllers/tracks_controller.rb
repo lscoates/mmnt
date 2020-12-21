@@ -5,11 +5,15 @@ class TracksController < ApplicationController
     @tracks = current_user.tracks
   end
 
+  def new; end
+
   def create
-    result = Tracks::Creator.new(user: current_user, params: track_params).call
+    result = ::Tracks::Creator.new(user: current_user, params: track_params).call
 
     respond_to do |format|
       if result.success?
+        flash[:success] = "New track successfully created!"
+
         format.json do
           render json: result.data, status: :created
         end

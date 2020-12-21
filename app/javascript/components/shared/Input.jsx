@@ -21,6 +21,7 @@ const Input = (props) => {
       </label>
       <input
         id={id}
+        disable={isDisabled}
         name={name}
         type="text"
         className="form-control"
@@ -39,7 +40,7 @@ const Input = (props) => {
 
 Input.defaultProps = {
   id: '',
-  isDisabled: false,
+  isDisabled: null,
   hasError: false,
   helpText: null,
   label: '',
