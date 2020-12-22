@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 const Input = (props) => {
   const {
+    errors,
     id,
     isDisabled,
-    hasError,
     helpText,
     label,
     name,
@@ -14,6 +14,8 @@ const Input = (props) => {
     value,
   } = props;
 
+  const classes = `form-control ${errors ? 'is-invalid' : ''}`;
+
   return (
     <div className="form-group">
       <label htmlFor={id}>
@@ -21,13 +23,19 @@ const Input = (props) => {
       </label>
       <input
         id={id}
+        disable={isDisabled}
         name={name}
         type="text"
-        className="form-control"
+        className={classes}
         value={value}
         placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
       />
+      {errors && (
+        <div className="invalid-feedback">
+          {errors}
+        </div>
+      )}
       {helpText && (
         <small className="form-text text-muted">
           {helpText}
@@ -38,9 +46,9 @@ const Input = (props) => {
 };
 
 Input.defaultProps = {
+  errors: null,
   id: '',
-  isDisabled: false,
-  hasError: false,
+  isDisabled: null,
   helpText: null,
   label: '',
   placeholder: '',
@@ -48,9 +56,9 @@ Input.defaultProps = {
 };
 
 Input.propTypes = {
+  errors: PropTypes.arrayOf(PropTypes.string),
   id: PropTypes.string,
   isDisabled: PropTypes.bool,
-  hasError: PropTypes.bool,
   helpText: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
