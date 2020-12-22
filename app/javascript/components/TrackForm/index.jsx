@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { decamelizeKeys } from 'humps';
+import { camelizeKeys, decamelizeKeys } from 'humps';
 
 import { api } from '../../utils/api';
 
@@ -9,8 +9,8 @@ import Form from '../shared/Form';
 import Input from '../shared/Input';
 import Button from '../shared/Button';
 
-const TrackForm = (props) => {
-  const [errors, setErrors] = useState([]);
+const TrackForm = () => {
+  const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [name, setName] = useState('');
 
@@ -22,10 +22,11 @@ const TrackForm = (props) => {
     });
 
     setIsSubmitting(true);
+    setErrors({});
     api().post('/tracks', data)
       .then(() => window.location.assign('/tracks'))
       .catch((error) => {
-        setErrors(error.response.data);
+        setErrors(camelizeKeys(error.response.data.errors));
         setIsSubmitting(false);
       });
   };
@@ -36,6 +37,8 @@ const TrackForm = (props) => {
         <Form id="track_form">
           <Input
             id="name"
+            clearErrors={setErrors}
+            errors={errors.name}
             label="Name"
             name="name"
             onChange={setName}

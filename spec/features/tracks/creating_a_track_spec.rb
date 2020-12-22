@@ -36,7 +36,7 @@ feature "Creating a new track", type: :feature do
       fill_in "Name", with: "Career"
       click_button "Create Track"
 
-      assert_no_text("New track successfully created!")
+      assert_text(:visible, "has already been taken")
     end
   end
 end
