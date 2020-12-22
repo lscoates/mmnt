@@ -10,7 +10,7 @@ class Tracks::Creator < ServicesBase
     if new_track.save
       success(new_track)
     else
-      error(new_track.errors.full_messages)
+      error(new_track.errors)
     end
   end
 
