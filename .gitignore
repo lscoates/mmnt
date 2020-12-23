@@ -25,8 +25,13 @@
 /public/assets
 .byebug_history
 
+# OSX
+.DS_Store
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/production.key
+/config/credentials/development.key
 
 /public/packs
 /public/packs-test
