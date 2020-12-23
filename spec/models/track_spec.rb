@@ -32,5 +32,10 @@ describe Track, "validations" do
       new_track = Track.new(name: "Career", user: user1)
       expect(new_track).to be_invalid
     end
+
+    it "is case insensitive when checking for uniqueness" do
+      new_track = Track.new(name: "career", user: user1)
+      expect(new_track).to be_invalid
+    end
   end
 end

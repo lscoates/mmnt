@@ -4,5 +4,7 @@ class Track < ApplicationRecord
 
   # Validations
   validates_presence_of :user, :name
-  validates_uniqueness_of :name, scope: :user_id
+  validates_uniqueness_of :name,
+    scope: :user_id,
+    case_sensitive: false
 end
