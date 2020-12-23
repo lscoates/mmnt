@@ -1,5 +1,10 @@
 require "rails_helper"
 
+describe Track, "associations" do
+  it { is_expected.to belong_to(:user) }
+  it { is_expected.to have_many(:moments) }
+end
+
 describe Track, "validations" do
   it { should validate_presence_of(:user) }
 

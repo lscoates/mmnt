@@ -1,6 +1,7 @@
 class Track < ApplicationRecord
   # Associations
   belongs_to :user
+  has_many :moments
 
   # Validations
   validates_presence_of :user, :name
