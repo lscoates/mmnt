@@ -24,12 +24,12 @@ class MomentsController < ApplicationController
   private
 
   def track
-    track = current_user.tracks.find_by(id: params[:track_id])
+    track = Tracks::Finder.track_for_user(current_user, params[:track_id])
 
     if track.present?
       track
     else
-      render json: { errors: "Could not find the specific track" }, status: :not_found
+      render json: { errors: "Could not find the specified track" }, status: :not_found
     end
   end
 

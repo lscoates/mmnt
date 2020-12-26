@@ -4,6 +4,9 @@ class Tracks::Finder
   end
 
   def self.track_for_user(user, id)
-    user.tracks.includes(:moments).find_by(id: id)
+    user
+      .tracks
+      .includes(:moments)
+      .find_by(id: id)
   end
 end
