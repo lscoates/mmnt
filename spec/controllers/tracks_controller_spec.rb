@@ -15,7 +15,7 @@ describe TracksController, type: :controller do
     let!(:track2) { create(:track, user: user) }
     let!(:track3) { create(:track) }
 
-    before { sign_in user }
+    before { sign_in(user) }
 
     it "assigns a list of tracks that belong to the user" do
       get :index
@@ -25,10 +25,31 @@ describe TracksController, type: :controller do
     end
   end
 
+  describe "GET show" do
+    let(:track) { create(:track) }
+    let(:user) { track.user }
+
+    before { sign_in(user) }
+
+    it "assigns the correct track" do
+      get :show, params: { id: track.id }
+
+      expect(response.status).to eql(200)
+      expect(assigns(:track)).to eql(track)
+    end
+
+    it "returns a 404 when the track can't be found" do
+      get :show, params: { id: 999 }
+
+      expect(response.status).to eql(404)
+      expect(assigns(:track)).to eql(nil)
+    end
+  end
+
   describe "POST create" do
     let(:user) { create(:user) }
 
-    before { sign_in user }
+    before { sign_in(user) }
 
     context "when the params are valid" do
       let(:params) do

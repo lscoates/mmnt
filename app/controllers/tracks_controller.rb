@@ -1,14 +1,17 @@
 class TracksController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_track, only: [:show]
 
   def index
-    @tracks = current_user.tracks
+    @tracks = Tracks::Finder.tracks_for_user(current_user)
   end
+
+  def show; end
 
   def new; end
 
   def create
-    result = ::Tracks::Creator.new(user: current_user, params: track_params).call
+    result = Tracks::Creator.new(user: current_user, params: track_params).call
 
     respond_to do |format|
       if result.success?
@@ -26,6 +29,14 @@ class TracksController < ApplicationController
   end
 
   private
+
+  def set_track
+    @track = Tracks::Finder.track_for_user(current_user, params[:id])
+
+    unless @track.present?
+      render json: { errors: "Could not find the specified track" }, status: :not_found
+    end
+  end
 
   def track_params
     params.require(:track).permit(

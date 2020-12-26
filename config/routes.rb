@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     get 'logout', to: 'devise/sessions#destroy'
   end
 
-  resources :tracks, only: [:index, :new, :create] do
+  resources :tracks, only: [:index, :show, :new, :create] do
     resources :moments, only: [:new, :create]
   end
 end
