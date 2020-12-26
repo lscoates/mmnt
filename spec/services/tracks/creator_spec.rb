@@ -4,7 +4,7 @@ describe Tracks::Creator, "#call" do
   let(:user) { create(:user) }
   let(:result) { described_class.new(user: user, params: params).call }
 
-  context "when the data is valid" do
+  context "when the params are valid" do
     let(:params) { { name: "Career" } }
 
     it "creates a new track" do
