@@ -1,10 +1,11 @@
 class MomentsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_track, only: [:new, :create]
 
   def new; end
 
   def create
-    result = Moments::Creator.new(track: track, params: moment_params).call
+    result = Moments::Creator.new(track: @track, params: moment_params).call
 
     respond_to do |format|
       if result.success?
@@ -23,12 +24,10 @@ class MomentsController < ApplicationController
 
   private
 
-  def track
-    track = Tracks::Finder.track_for_user(current_user, params[:track_id])
+  def set_track
+    @track = Tracks::Finder.track_for_user(current_user, params[:track_id])
 
-    if track.present?
-      track
-    else
+    unless @track.present?
       render json: { errors: "Could not find the specified track" }, status: :not_found
     end
   end
