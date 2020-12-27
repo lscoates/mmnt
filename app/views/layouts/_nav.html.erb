@@ -6,12 +6,14 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-    </ul>
-    <ul class="navbar-nav">
       <% if user_signed_in? %>
         <li class="nav-item">
           <%= link_to "Tracks", tracks_path, class: "nav-link" %>
         </li>
+      <% end %>
+    </ul>
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
         <li class="nav-item">
           <%= link_to "Logout", logout_path, class: "nav-link" %>
         </li>
