@@ -7,14 +7,16 @@
 <div class="row">
   <% @tracks.each do |track| %>
     <div class="col col-md-4">
-      <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">
-            <%= track.name %>
-          </h5>
-          <p class="card-text"></p>
+      <%= link_to track_path(track) do %>
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= track.name %>
+            </h5>
+            <p class="card-text"></p>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>

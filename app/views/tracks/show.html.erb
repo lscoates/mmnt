@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col">
+    <%= link_to "New Moment", new_track_moment_path(@track), class: "btn btn-primary float-right" %>
+  </div>
+</div>
+
+<h1><%= @track.name %></h1>
+
+<% @track.moments.each do |moment| %>
+  <div class="row">
+    <div class="col col-md-4">
+      <%= moment.body %>
+    </div>
+  </div>
+<% end %>
+
+<% if @track.moments.empty? %>
+  Track your first moment!
+<% end %>
