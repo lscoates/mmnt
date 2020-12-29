@@ -2,22 +2,26 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { camelizeKeys, decamelizeKeys } from 'humps';
+import moment from 'moment';
 
 import { api } from '../../utils/api';
 
 import Form from '../shared/Form';
 import Input from '../shared/Input';
 import Button from '../shared/Button';
+import DatePicker from '../shared/DatePicker';
 
 const MomentForm = ({ trackId }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [body, setBody] = useState('');
+  const [originalDate, setOriginalDate] = useState(moment().format());
 
   const submitForm = () => {
     const data = decamelizeKeys({
       moment: {
         body,
+        originalDate,
       },
     });
 
@@ -44,6 +48,14 @@ const MomentForm = ({ trackId }) => {
             onChange={setBody}
             value={body}
           />
+
+          <DatePicker
+            id="original_date"
+            date={originalDate}
+            label="When did it happen?"
+            setDate={setOriginalDate}
+          />
+
           <Button
             onClick={submitForm}
             isDisabled={isSubmitting}

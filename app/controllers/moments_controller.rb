@@ -35,6 +35,7 @@ class MomentsController < ApplicationController
   def moment_params
     params.require(:moment).permit(
       :body,
+      :original_date,
     )
   end
 end
