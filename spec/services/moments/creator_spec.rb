@@ -5,12 +5,19 @@ describe Moments::Creator, "#call" do
   let(:result) { described_class.new(track: track, params: params).call }
 
   context "when the params are valid" do
-    let(:params) { { body: "Once upon a time..." } }
+    let(:params) do
+      {
+        body: "Once upon a time...",
+        original_date: "2020-12-20T00:10:00-08:00",
+      }
+    end
 
     it "creates a new moment" do
       expect(result.success?).to eql(true)
       expect(result.data).to be_a(Moment)
       expect(track.moments.count).to eql(1)
+      expect(result.data.original_date)
+        .to eql(Time.zone.parse("2020-12-20T00:10:00-08:00"))
     end
   end
 

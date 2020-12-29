@@ -21,6 +21,11 @@ feature "Creating a new moment", type: :feature do
       click_link "New Moment"
 
       fill_in "Describe your moment...", with: "Once upon a time..."
+
+      find(:css, "div.SingleDatePicker").click
+      assert_text(:visible, Date.today.strftime("%B"))
+      find_all(:css, "td.CalendarDay").first.click
+
       click_button "Create Moment"
 
       assert_text(:visible, "New moment successfully created!")

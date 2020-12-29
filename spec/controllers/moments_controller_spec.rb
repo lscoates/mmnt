@@ -20,6 +20,7 @@ describe MomentsController, type: :controller do
       let(:params) do
         {
           body: "Once upon a time...",
+          original_date: "2020-12-15T12:00:00-08:00",
         }
       end
 

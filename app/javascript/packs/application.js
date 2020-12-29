@@ -9,6 +9,7 @@ require('channels');
 require('bootstrap');
 
 // stylesheets
+require('react-dates/lib/css/_datepicker.css');
 require('../stylesheets/main.scss');
 
 // Uncomment to copy all static images under ../images to the output folder and reference
