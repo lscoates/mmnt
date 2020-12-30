@@ -3,6 +3,28 @@ require "rails_helper"
 describe Track, "associations" do
   it { is_expected.to belong_to(:user) }
   it { is_expected.to have_many(:moments) }
+
+  context "moments" do
+    let(:track) { create(:track) }
+    let!(:moment1) do
+      create(
+        :moment,
+        original_date: Time.zone.parse("Jan 20 2020"),
+        track: track
+      )
+    end
+    let!(:moment2) do
+      create(
+        :moment,
+        original_date: Time.zone.parse("Mar 12 2020"),
+        track: track
+      )
+    end
+
+    it "orders the moments by the original_date ascending" do
+      expect(track.moments).to match([moment2, moment1])
+    end
+  end
 end
 
 describe Track, "validations" do

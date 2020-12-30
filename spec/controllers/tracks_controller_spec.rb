@@ -27,15 +27,17 @@ describe TracksController, type: :controller do
 
   describe "GET show" do
     let(:track) { create(:track) }
+    let!(:moment) { create(:moment, track: track) }
     let(:user) { track.user }
 
     before { sign_in(user) }
 
-    it "assigns the correct track" do
+    it "assigns the correct track and moments" do
       get :show, params: { id: track.id }
 
       expect(response.status).to eql(200)
       expect(assigns(:track)).to eql(track)
+      expect(assigns(:moments)).to match(track.moments)
     end
 
     it "returns a 404 when the track can't be found" do

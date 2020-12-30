@@ -6,7 +6,9 @@ class TracksController < ApplicationController
     @tracks = Tracks::Finder.tracks_for_user(current_user)
   end
 
-  def show; end
+  def show
+    @moments = Moments::Finder.moments_for_track(@track)
+  end
 
   def new; end
 
