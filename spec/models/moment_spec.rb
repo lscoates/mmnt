@@ -5,8 +5,9 @@ describe Moment, "associations" do
 end
 
 describe Moment, "validations" do
-  it { should validate_presence_of(:track) }
   it { should validate_presence_of(:body) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:track) }
 end
 
 describe Moment, "callbacks" do

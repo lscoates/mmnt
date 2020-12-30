@@ -3,7 +3,7 @@ class Moment < ApplicationRecord
   belongs_to :track
 
   # Validations
-  validates_presence_of :body, :track, :original_date
+  validates_presence_of :title, :body, :track, :original_date
 
   # Callbacks
   before_validation :set_original_date
