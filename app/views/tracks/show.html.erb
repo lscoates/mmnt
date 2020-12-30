@@ -9,7 +9,12 @@
 <% @track.moments.each do |moment| %>
   <div class="row">
     <div class="col col-md-4">
-      <%= moment.body %>
+      <%= moment.body %> |
+      <small>
+        <%= moment.original_date.strftime("%m/%d/%Y") %>
+      </small>
+
+      <hr/>
     </div>
   </div>
 <% end %>
