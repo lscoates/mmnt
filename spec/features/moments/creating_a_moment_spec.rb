@@ -20,6 +20,7 @@ feature "Creating a new moment", type: :feature do
 
       click_link "New Moment"
 
+      fill_in "Title", with: "A moment"
       fill_in "Describe your moment...", with: "Once upon a time..."
 
       find(:css, "div.SingleDatePicker").click

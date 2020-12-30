@@ -19,6 +19,7 @@ describe MomentsController, type: :controller do
     context "when the params are valid" do
       let(:params) do
         {
+          title: "A moment",
           body: "Once upon a time...",
           original_date: "2020-12-15T12:00:00-08:00",
         }
@@ -31,10 +32,27 @@ describe MomentsController, type: :controller do
       end
     end
 
-    context "when the params are invalid" do
+    context "when the body is missing" do
       let(:params) do
         {
+          title: "A moment",
           body: "",
+        }
+      end
+
+      it "returns an error" do
+        expect { post :create, params: { track_id: track.id, moment: params, format: :json  } }
+          .not_to change { track.moments.count }
+        expect(response.status).to eql(422)
+        expect(JSON.parse(response.body)["errors"].size).to eql(1)
+      end
+    end
+
+    context "when the title is missing" do
+      let(:params) do
+        {
+          title: "",
+          body: "Once upon a time...",
         }
       end
 

@@ -14,12 +14,14 @@ import DatePicker from '../shared/DatePicker';
 const MomentForm = ({ trackId }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [originalDate, setOriginalDate] = useState(moment().format());
 
   const submitForm = () => {
     const data = decamelizeKeys({
       moment: {
+        title,
         body,
         originalDate,
       },
@@ -39,6 +41,16 @@ const MomentForm = ({ trackId }) => {
     <div className="row justify-content-center">
       <div className="col col-md-6">
         <Form id="moment_form">
+          <Input
+            id="title"
+            clearErrors={setErrors}
+            errors={errors.title}
+            label="Title"
+            name="title"
+            onChange={setTitle}
+            value={title}
+          />
+
           <Input
             id="body"
             clearErrors={setErrors}

@@ -7,6 +7,7 @@ describe Moments::Creator, "#call" do
   context "when the params are valid" do
     let(:params) do
       {
+        title: "A moment",
         body: "Once upon a time...",
         original_date: "2020-12-20T00:10:00-08:00",
       }
@@ -26,7 +27,8 @@ describe Moments::Creator, "#call" do
 
     it "returns an error" do
       expect(result.success?).to eql(false)
-      expect(result.data.size).to eql(1)
+      expect(result.data.size).to eql(2)
+      expect(result.data[:title]).to match(["can't be blank"])
       expect(result.data[:body]).to match(["can't be blank"])
     end
   end
