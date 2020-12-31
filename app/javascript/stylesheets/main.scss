@@ -1,4 +1,6 @@
-@import "bootstrap/scss/bootstrap";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 @import "base/general";
 @import "base/nav";
 @import "components/datepicker";
+@import "tailwindcss/utilities";

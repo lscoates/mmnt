@@ -4,18 +4,13 @@
   </div>
 </div>
 
-<div class="row">
+<div class="grid grid-cols-1  md:grid-cols-3 gap-4">
   <% @tracks.each do |track| %>
-    <div class="col col-md-4">
+    <div>
       <%= link_to track_path(track) do %>
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= track.name %>
-            </h5>
-            <p class="card-text"></p>
-          </div>
-        </div>
+        <h5 class="card-title">
+          <%= track.name %>
+        </h5>
       <% end %>
     </div>
   <% end %>

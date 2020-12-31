@@ -12,17 +12,19 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.2.2",
+    "autoprefixer": "^9",
     "axios": "^0.21.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "bootstrap": "^4.5.3",
     "humps": "^2.0.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
+    "postcss": "^7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dates": "^21.8.0",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "version": "0.1.0",
   "devDependencies": {
