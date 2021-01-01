@@ -7,15 +7,19 @@
 <h1><%= @track.name %></h1>
 
 <% @track.moments.each do |moment| %>
-  <div class="row">
-    <div class="col col-md-4">
+  <div class="track-card">
+    <div class="track-img-overlay">
+    </div>
+
+    <div class="track-img">
+    </div>
+
+    <div class="track-body">
       <h4><%= moment.title %></h4>
       <%= moment.body %> |
       <small>
         <%= moment.original_date.strftime("%m/%d/%Y") %>
       </small>
-
-      <hr/>
     </div>
   </div>
 <% end %>
