@@ -7,6 +7,7 @@ require('@rails/ujs').start();
 require('@rails/activestorage').start();
 require('channels');
 require('bootstrap');
+require('trix/dist/trix');
 
 // stylesheets
 require('react-dates/lib/css/_datepicker.css');

@@ -21,7 +21,7 @@ feature "Creating a new moment", type: :feature do
       click_link "New Moment"
 
       fill_in "Title", with: "A moment"
-      fill_in "Describe your moment...", with: "Once upon a time..."
+      find("trix-editor").click.set("Once upon a time...")
 
       find(:css, "div.SingleDatePicker").click
       assert_text(:visible, Date.today.strftime("%B"))
@@ -35,7 +35,7 @@ feature "Creating a new moment", type: :feature do
     scenario "when the form data is invalid" do
       visit "/tracks/#{track.id}/moments/new"
 
-      fill_in "Describe your moment...", with: ""
+      find("trix-editor").click.set("")
       click_button "Create Moment"
 
       assert_text(:visible, "can't be blank")

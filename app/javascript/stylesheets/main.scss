@@ -1,5 +1,12 @@
+// External
 @import "bootstrap/scss/bootstrap";
+@import "trix/dist/trix";
+
+// Base
 @import "base/general";
 @import "base/nav";
+
+// Components
+@import "components/trix";
 @import "components/datepicker";
 @import "components/moment_card";

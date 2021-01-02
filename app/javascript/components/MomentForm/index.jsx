@@ -10,6 +10,7 @@ import Form from '../shared/Form';
 import Input from '../shared/Input';
 import Button from '../shared/Button';
 import DatePicker from '../shared/DatePicker';
+import WysiwygEditor from '../shared/WysiwygEditor';
 
 const MomentForm = ({ trackId }) => {
   const [errors, setErrors] = useState({});
@@ -51,14 +52,11 @@ const MomentForm = ({ trackId }) => {
             value={title}
           />
 
-          <Input
+          <WysiwygEditor
             id="body"
-            clearErrors={setErrors}
             errors={errors.body}
             label="Describe your moment..."
-            name="body"
             onChange={setBody}
-            value={body}
           />
 
           <DatePicker
