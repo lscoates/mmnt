@@ -1,10 +1,14 @@
 .track-card {
   border-radius: 15px;
   display: flex;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;
-  max-width: 750px;
+  max-width: 600px;
   position: relative;
+
+  small {
+    font-size: 70%;
+  }
 
   .track-img-overlay {
     width: 200px;
