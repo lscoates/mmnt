@@ -17,10 +17,10 @@ const WysiwygEditor = (props) => {
       alert('File attachment is not currently supported!');
     });
 
-    return () => {
+    return function cleanup() {
       window.removeEventListener('trix-file-accept');
     };
-  });
+  }, [id]);
 
   const handleChange = (html) => {
     onChange(html);
@@ -56,7 +56,7 @@ WysiwygEditor.defaultProps = {
 };
 
 WysiwygEditor.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
   errors: PropTypes.arrayOf(PropTypes.string),
   helpText: PropTypes.string,
   label: PropTypes.string,
