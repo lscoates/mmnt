@@ -7,11 +7,11 @@
 <h1><%= @track.name %></h1>
 
 <% @track.moments.each do |moment| %>
-  <div class="track-card">
-    <div class="track-img">
+  <div class="row track-card">
+    <div class="col-sm-12 col-md-4 track-img">
     </div>
 
-    <div class="track-body">
+    <div class="col-sm-12 col-md-8 track-body">
       <h4>
         <%= moment.title %> |
         <small>
