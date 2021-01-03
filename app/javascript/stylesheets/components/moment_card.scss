@@ -1,4 +1,4 @@
-.track-card {
+.moment-card {
   border-radius: 15px;
   display: flex;
   margin: 50px 15px;
@@ -14,7 +14,7 @@
     font-size: 70%;
   }
 
-  .track-img-overlay {
+  .moment-img-overlay {
     width: 200px;
     height: 300px;
     position: absolute;
@@ -33,7 +33,7 @@
     );
   }
 
-  .track-img {
+  .moment-img {
     min-width: 200px;
     min-height: 150px;
     border-radius: 15px 15px 0px 0px;
@@ -52,7 +52,7 @@
     }
   }
 
-  .track-body {
+  .moment-body {
     padding: 15px;
   }
 }

@@ -6,15 +6,13 @@
 
 <div class="row">
   <% @tracks.each do |track| %>
-    <div class="col col-md-4">
+    <div class="col track-container">
       <%= link_to track_path(track) do %>
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= track.name %>
-            </h5>
-            <p class="card-text"></p>
-          </div>
+        <div class="track-card">
+          <h5 class="card-title">
+            <%= track.name %>
+          </h5>
+          <p class="card-text"></p>
         </div>
       <% end %>
     </div>
