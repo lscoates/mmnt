@@ -17,7 +17,7 @@ const DatePicker = ({
   };
 
   const outsideRange = (selectedDate) => (
-    selectedDate.isAfter(moment())
+    selectedDate.isAfter(moment().endOf('day'))
   );
 
   return (
