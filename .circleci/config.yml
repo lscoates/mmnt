@@ -1,0 +1,58 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.7.1-node-browsers
+        environment:
+          PGHOST: localhost
+          PGUSER: mmnt
+          RAILS_ENV: test
+      - image: circleci/postgres:13.2-ram
+        environment:
+          POSTGRES_USER: mmnt
+          POSTGRES_DB: mmnt_test
+          POSTGRES_PASSWORD: "example"
+
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Gemfile Cache
+          keys:
+            - mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - mmnt-
+      - run:
+          name: Install Dependencies
+          command: |
+            bundle install
+      - save_cache:
+          name: Save Gemfile Cache
+          key: mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Setup Database
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Setup Frontend
+          command: |
+            yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+            yarn build-test
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Run Rails Specs
+          command: |
+            bundle exec rspec
+      - run:
+          name: Run Jest Specs
+          command: |
+            yarn test
