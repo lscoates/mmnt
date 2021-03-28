@@ -1,5 +1,5 @@
 class ServicesBase
-  def success(data= {})
+  def success(data = {})
     OpenStruct.new(success?: true, data: data)
   end
 

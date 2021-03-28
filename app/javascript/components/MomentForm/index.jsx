@@ -15,22 +15,33 @@ import WysiwygEditor from '../shared/WysiwygEditor';
 const MomentForm = ({ trackId }) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [featureImage, setFeatureImage] = useState('');
+  const [featureImageSrc, setFeatureImageSrc] = useState('');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [originalDate, setOriginalDate] = useState(moment().format());
 
+  const handleFeatureImage = (event) => {
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      setFeatureImageSrc(e.target.result);
+    };
+    reader.readAsDataURL(event.target.files[0]);
+
+    setFeatureImage(event.target.files[0]);
+  };
+
   const submitForm = () => {
-    const data = decamelizeKeys({
-      moment: {
-        title,
-        body,
-        originalDate,
-      },
-    });
+    const formData = new FormData();
+    formData.append('moment[title]', title);
+    formData.append('moment[body]', body);
+    formData.append('moment[original_date]', originalDate);
+    formData.append('moment[feature_image]', featureImage);
 
     setIsSubmitting(true);
     setErrors({});
-    api().post(`/tracks/${trackId}/moments`, data)
+    api().post(`/tracks/${trackId}/moments`, formData)
       .then(() => window.location.assign(`/tracks/${trackId}`))
       .catch((error) => {
         setErrors(camelizeKeys(error.response.data.errors));
@@ -42,6 +53,18 @@ const MomentForm = ({ trackId }) => {
     <div className="row justify-content-center">
       <div className="col col-md-6">
         <Form id="moment_form">
+          <input
+            id="feature_image"
+            type="file"
+            onChange={(e) => handleFeatureImage(e)}
+          />
+          {featureImageSrc && (
+            <img
+              src={featureImageSrc}
+              alt={title}
+              style={{ maxWidth: '100px', width: '100%', height: '100%' }}
+            />
+          )}
           <Input
             id="title"
             clearErrors={setErrors}

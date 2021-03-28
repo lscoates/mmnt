@@ -3,10 +3,12 @@ class Moments::Creator < ServicesBase
 
   def initialize(track:, params:)
     @track = track
-    @params = params
+    @params = sanitized_params(params)
   end
 
   def call
+    optimize_feature_image
+
     if new_moment.save
       success(new_moment)
     else
@@ -15,6 +17,22 @@ class Moments::Creator < ServicesBase
   end
 
   private
+
+  def optimize_feature_image
+    return if params[:feature_image].blank?
+
+    UploadedImageOptimizer.call(params[:feature_image].tempfile.path)
+  end
+
+  def sanitized_params(params)
+    params = params.presence || {}
+
+    if params[:feature_image].blank?
+      params.except(:feature_image)
+    else
+      params
+    end
+  end
 
   def new_moment
     @new_moment ||= track.moments.new(params)
