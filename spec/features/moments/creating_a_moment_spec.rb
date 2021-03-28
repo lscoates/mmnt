@@ -32,6 +32,28 @@ feature "Creating a new moment", type: :feature do
       assert_text(:visible, "New moment successfully created!")
     end
 
+    scenario "successfully creating a new moment with a photo" do
+      visit "/tracks/#{track.id}"
+
+      click_link "New Moment"
+
+      attach_file(
+        "feature_image",
+        Rails.root + "spec/fixtures/images/bible-1200x1500.jpg"
+      )
+
+      fill_in "Title", with: "A moment"
+      find("trix-editor").click.set("Once upon a time...")
+
+      find(:css, "div.SingleDatePicker").click
+      assert_text(:visible, Date.today.strftime("%B"))
+      find_all(:css, "td.CalendarDay").first.click
+
+      click_button "Create Moment"
+
+      assert_text(:visible, "New moment successfully created!")
+    end
+
     scenario "when the form data is invalid" do
       visit "/tracks/#{track.id}/moments/new"
 

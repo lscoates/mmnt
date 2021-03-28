@@ -9,6 +9,12 @@
 <% @track.moments.each do |moment| %>
   <div class="row moment-card">
     <div class="col-sm-12 col-md-4 moment-img">
+      <% if moment.feature_image.present? %>
+        <%= image_tag(
+          moment.feature_image.variant(resize_to_limit: [600, 600]).processed,
+          alt: moment.title
+        ) %>
+      <% end %>
     </div>
 
     <div class="col-sm-12 col-md-8 moment-body">

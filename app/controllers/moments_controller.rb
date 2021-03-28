@@ -37,6 +37,7 @@ class MomentsController < ApplicationController
       :body,
       :original_date,
       :title,
+      :feature_image,
     )
   end
 end
