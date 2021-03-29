@@ -3,14 +3,14 @@ import React from 'react';
 import { shallow, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { SingleDatePicker } from 'react-dates';
-import Datepicker from 'shared/Datepicker';
+import DatePicker from 'shared/DatePicker';
 
 configure({ adapter: new Adapter() });
 
-describe('Datepicker', () => {
+describe('DatePicker', () => {
   it('renders the SingleDatePicker component', () => {
     const wrapper = shallow(
-      <Datepicker
+      <DatePicker
         id="date_picker"
         setDate={() => {}}
       />,
@@ -21,7 +21,7 @@ describe('Datepicker', () => {
 
   it('renders a label when provided', () => {
     const wrapper = shallow(
-      <Datepicker
+      <DatePicker
         id="date_picker"
         label="Date"
         setDate={() => {}}
