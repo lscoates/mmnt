@@ -29,7 +29,7 @@ describe Moments::Creator, "#call" do
         title: "A moment",
         body: "Once upon a time...",
         original_date: "2020-12-20T00:10:00-08:00",
-        feature_image: fixture_file_upload("images/bible-1200x1500.jpg", "image/jpg")
+        feature_image: fixture_file_upload("images/bible-1200x1500.jpg", "image/jpeg")
       }
     end
 
