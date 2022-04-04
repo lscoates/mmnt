@@ -39,7 +39,7 @@ feature "Creating a new moment", type: :feature do
 
       attach_file(
         "feature_image",
-        Rails.root + "spec/fixtures/images/bible-1200x1500.jpg"
+        Rails.root + "spec/fixtures/files/images/bible-1200x1500.jpg"
       )
 
       fill_in "Title", with: "A moment"
