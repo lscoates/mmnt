@@ -9,12 +9,6 @@ This app uses the following versions:
 - **Rails**: 7.0.0
 - **Node.js**: 13.0.0
 
-You'll also need to have vips installed locally for image processing, which can be done by running:
-
-```rb
-brew install vips
-```
-
 To setup the app locally run:
 ```rb
 bin/setup
