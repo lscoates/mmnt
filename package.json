@@ -43,6 +43,9 @@
     "regenerator-runtime": "^0.13.7",
     "webpack-dev-server": "^3.11.0"
   },
+  "engines": {
+    "node": "13.x"
+  },
   "jest": {
     "setupFilesAfterEnv": [
       "./node_modules/jest-enzyme/lib/index.js"
