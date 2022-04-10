@@ -24,6 +24,7 @@ jobs:
           name: Install Dependencies
           command: |
             bundle install
+            sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
       - save_cache:
