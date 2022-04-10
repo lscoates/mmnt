@@ -9,7 +9,7 @@ describe Moments::Creator, "#call" do
     let(:params) do
       {
         title: "A moment",
-        body: "Once upon a time...",
+        content: "Once upon a time...",
         original_date: "2020-12-20T00:10:00-08:00",
       }
     end
@@ -27,7 +27,7 @@ describe Moments::Creator, "#call" do
     let(:params) do
       {
         title: "A moment",
-        body: "Once upon a time...",
+        content: "Once upon a time...",
         original_date: "2020-12-20T00:10:00-08:00",
         feature_image: fixture_file_upload("images/bible-1200x1500.jpg", "image/jpeg")
       }
@@ -60,7 +60,7 @@ describe Moments::Creator, "#call" do
       expect(result.success?).to eql(false)
       expect(result.errors.size).to eql(2)
       expect(result.errors[:title]).to match(["can't be blank"])
-      expect(result.errors[:body]).to match(["can't be blank"])
+      expect(result.errors[:content]).to match(["can't be blank"])
     end
   end
 end

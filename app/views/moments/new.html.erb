@@ -20,9 +20,8 @@
 
       <br/>
 
-      <%= form.label :body, "Describe your moment..." %>
-      <%= form.hidden_field :body %>
-      <trix-editor input="moment_body"></trix-editor>
+      <%= form.label :content, "Describe your moment..." %>
+      <%= form.rich_text_area :content %>
 
       <br/>
 
