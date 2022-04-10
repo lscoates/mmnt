@@ -16,7 +16,7 @@ class MomentsController < ApplicationController
         end
       else
         format.json do
-          render json: { errors: result.data }, status: :unprocessable_entity
+          render json: { errors: result.errors }, status: :unprocessable_entity
         end
       end
     end

@@ -8,9 +8,9 @@ class Tracks::Creator < ServicesBase
 
   def call
     if new_track.save
-      success(new_track)
+      Result.new(success?: true, data: new_track, errors: [])
     else
-      error(new_track.errors)
+      Result.new(success?: false, data: new_track, errors: new_track.errors)
     end
   end
 

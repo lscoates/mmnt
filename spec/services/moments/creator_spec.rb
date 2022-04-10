@@ -58,9 +58,9 @@ describe Moments::Creator, "#call" do
 
     it "returns an error" do
       expect(result.success?).to eql(false)
-      expect(result.data.size).to eql(2)
-      expect(result.data[:title]).to match(["can't be blank"])
-      expect(result.data[:body]).to match(["can't be blank"])
+      expect(result.errors.size).to eql(2)
+      expect(result.errors[:title]).to match(["can't be blank"])
+      expect(result.errors[:body]).to match(["can't be blank"])
     end
   end
 end
