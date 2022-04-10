@@ -19,19 +19,20 @@ jobs:
           name: Restore Gemfile Cache
           keys:
             - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
+            - mmnt-{{ .Environment.CACHE_VERSION }}-
             - mmnt-
-      - run:
-          name: Install Dependencies
-          command: |
-            bundle install
-            sudo apt update
-            sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
-            sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
+      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
       - save_cache:
           name: Save Gemfile Cache
           key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - run:
+          name: Install Dependencies
+          command: |
+            sudo apt update
+            sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
+            sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
       - run:
           name: Swap node versions
           command: |
@@ -58,7 +59,7 @@ jobs:
           name: Setup Frontend
           command: |
             yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-            yarn build-test
+            yarn build
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
@@ -67,8 +68,5 @@ jobs:
       - run:
           name: Run Rails Specs
           command: |
+            bundle exec rake assets:precompile
             bundle exec rspec
-      - run:
-          name: Run Jest Specs
-          command: |
-            yarn test

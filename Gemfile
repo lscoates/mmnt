@@ -7,7 +7,7 @@ gem 'rails', '7.0.0'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.3.9'
 gem 'sass-rails', '>= 6'
-gem 'webpacker', '~> 4.0'
+gem 'jsbundling-rails'
 gem 'jbuilder', '~> 2.7'
 gem 'devise'
 gem 'aws-sdk-s3', require: false
@@ -53,3 +53,7 @@ gem "hotwire-rails", "~> 0.1.3"
 
 # Use Redis for Action Cable
 gem "redis", "~> 4.0"
+
+gem "cssbundling-rails", "~> 1.1"
+
+gem "tailwindcss-rails", "~> 2.0"

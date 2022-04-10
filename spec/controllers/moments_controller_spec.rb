@@ -20,7 +20,7 @@ describe MomentsController, type: :controller do
       let(:params) do
         {
           title: "A moment",
-          body: "Once upon a time...",
+          content: "Once upon a time...",
           original_date: "2020-12-15T12:00:00-08:00",
         }
       end
@@ -32,11 +32,11 @@ describe MomentsController, type: :controller do
       end
     end
 
-    context "when the body is missing" do
+    context "when the content is missing" do
       let(:params) do
         {
           title: "A moment",
-          body: "",
+          content: "",
         }
       end
 
@@ -44,7 +44,7 @@ describe MomentsController, type: :controller do
         expect { post :create, params: { track_id: track.id, moment: params } }
           .not_to change { track.moments.count }
         expect(response.status).to eql(422)
-        expect(assigns[:errors].full_messages).to eql(["Body can't be blank"])
+        expect(assigns[:errors].full_messages).to eql(["Content can't be blank"])
       end
     end
 
@@ -52,7 +52,7 @@ describe MomentsController, type: :controller do
       let(:params) do
         {
           title: "",
-          body: "Once upon a time...",
+          content: "Once upon a time...",
         }
       end
 

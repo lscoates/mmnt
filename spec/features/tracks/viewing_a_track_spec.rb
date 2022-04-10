@@ -28,7 +28,7 @@ feature "Viewing a specific track", type: :feature do
     end
 
     scenario "viewing a track with moments" do
-      create(:moment, track: track1, body: "Once upon a time...")
+      create(:moment, track: track1, content: "Once upon a time...")
 
       visit "/tracks/#{track1.id}"
 
