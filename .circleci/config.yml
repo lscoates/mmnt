@@ -30,7 +30,6 @@ jobs:
             sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
-            bundle exec rake assets:precompile
       - run:
           name: Swap node versions
           command: |
@@ -66,6 +65,7 @@ jobs:
       - run:
           name: Run Rails Specs
           command: |
+            bundle exec rake assets:precompile
             bundle exec rspec
       - run:
           name: Run Jest Specs
