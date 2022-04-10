@@ -70,7 +70,3 @@ jobs:
           command: |
             bundle exec rake assets:precompile
             bundle exec rspec
-      - run:
-          name: Run Jest Specs
-          command: |
-            yarn test
