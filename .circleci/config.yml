@@ -58,7 +58,7 @@ jobs:
           name: Setup Frontend
           command: |
             yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-            yarn build-test
+            yarn build
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}

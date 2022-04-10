@@ -43,3 +43,6 @@ yarn-debug.log*
 
 # App notes
 notes.txt
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

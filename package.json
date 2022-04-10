@@ -2,21 +2,21 @@
   "name": "mmnt",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production webpack --config ./config/webpack/production.js",
-    "build-test": "NODE_ENV=test webpack --config ./config/webpack/test.js",
-    "start": "./bin/webpack-dev-server",
+    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds",
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css",
     "test": "jest",
     "test-watch": "jest --watch"
   },
   "dependencies": {
     "@babel/preset-react": "^7.10.1",
+    "@hotwired/stimulus": "^3.0.1",
     "@rails/actioncable": "^6.1.5",
     "@rails/activestorage": "^6.1.5",
     "@rails/ujs": "^6.1.5",
-    "@rails/webpacker": "5.4.3",
     "axios": "^0.21.2",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "bootstrap": "^4.5.3",
+    "esbuild": "^0.14.34",
     "humps": "^2.0.1",
     "jquery": "^3.5.1",
     "moment": "^2.29.1",
@@ -40,8 +40,7 @@
     "eslint-plugin-react": "^7.20.0",
     "jest": "^26.6.3",
     "jest-enzyme": "^7.1.2",
-    "regenerator-runtime": "^0.13.7",
-    "webpack-dev-server": "^3.11.0"
+    "regenerator-runtime": "^0.13.7"
   },
   "engines": {
     "node": "16.x"
