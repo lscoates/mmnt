@@ -19,8 +19,8 @@ describe Tracks::Creator, "#call" do
 
     it "returns an error" do
       expect(result.success?).to eql(false)
-      expect(result.data.size).to eql(1)
-      expect(result.data[:name]).to match(["can't be blank"])
+      expect(result.errors.size).to eql(1)
+      expect(result.errors[:name]).to match(["can't be blank"])
     end
   end
 
@@ -29,8 +29,8 @@ describe Tracks::Creator, "#call" do
 
     it "returns an error" do
       expect(result.success?).to eql(false)
-      expect(result.data.size).to eql(1)
-      expect(result.data[:name]).to match(["can't be blank"])
+      expect(result.errors.size).to eql(1)
+      expect(result.errors[:name]).to match(["can't be blank"])
     end
   end
 
@@ -41,8 +41,8 @@ describe Tracks::Creator, "#call" do
       create(:track, name: "Career", user: user)
 
       expect(result.success?).to eql(false)
-      expect(result.data.size).to eql(1)
-      expect(result.data[:name]).to match(["has already been taken"])
+      expect(result.errors.size).to eql(1)
+      expect(result.errors[:name]).to match(["has already been taken"])
     end
   end
 end
