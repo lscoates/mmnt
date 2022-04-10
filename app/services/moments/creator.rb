@@ -10,9 +10,9 @@ class Moments::Creator < ServicesBase
     optimize_feature_image
 
     if new_moment.save
-      success(new_moment)
+      Result.new(success?: true, data: new_moment, errors: [])
     else
-      error(new_moment.errors)
+      Result.new(success?: false, data: new_moment, errors: new_moment.errors)
     end
   end
 

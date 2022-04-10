@@ -10,23 +10,21 @@ class TracksController < ApplicationController
     @moments = Moments::Finder.moments_for_track(@track)
   end
 
-  def new; end
+  def new
+    @track = Track.new
+    @errors = []
+  end
 
   def create
     result = Tracks::Creator.new(user: current_user, params: track_params).call
 
-    respond_to do |format|
-      if result.success?
-        flash[:success] = "New track successfully created!"
-
-        format.json do
-          render json: result.data, status: :created
-        end
-      else
-        format.json do
-          render json: { errors: result.data }, status: :unprocessable_entity
-        end
-      end
+    if result.success?
+      flash[:success] = "New track successfully created!"
+      redirect_to tracks_path
+    else
+      @track = result.data
+      @errors = result.errors
+      render :new, status: :unprocessable_entity
     end
   end
 

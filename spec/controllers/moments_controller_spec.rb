@@ -26,9 +26,9 @@ describe MomentsController, type: :controller do
       end
 
       it "creates a new track" do
-        expect { post :create, params: { track_id: track.id, moment: params, format: :json  } }
+        expect { post :create, params: { track_id: track.id, moment: params } }
           .to change { track.moments.count }.by(1)
-        expect(response.status).to eql(201)
+        expect(response.status).to eql(302)
       end
     end
 
@@ -41,10 +41,10 @@ describe MomentsController, type: :controller do
       end
 
       it "returns an error" do
-        expect { post :create, params: { track_id: track.id, moment: params, format: :json  } }
+        expect { post :create, params: { track_id: track.id, moment: params } }
           .not_to change { track.moments.count }
         expect(response.status).to eql(422)
-        expect(JSON.parse(response.body)["errors"].size).to eql(1)
+        expect(assigns[:errors].full_messages).to eql(["Body can't be blank"])
       end
     end
 
@@ -57,10 +57,10 @@ describe MomentsController, type: :controller do
       end
 
       it "returns an error" do
-        expect { post :create, params: { track_id: track.id, moment: params, format: :json  } }
+        expect { post :create, params: { track_id: track.id, moment: params } }
           .not_to change { track.moments.count }
         expect(response.status).to eql(422)
-        expect(JSON.parse(response.body)["errors"].size).to eql(1)
+        expect(assigns[:errors].full_messages).to eql(["Title can't be blank"])
       end
     end
   end

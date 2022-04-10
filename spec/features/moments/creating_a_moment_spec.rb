@@ -23,9 +23,7 @@ feature "Creating a new moment", type: :feature do
       fill_in "Title", with: "A moment"
       find("trix-editor").click.set("Once upon a time...")
 
-      find(:css, "div.SingleDatePicker").click
-      assert_text(:visible, Date.today.strftime("%B"))
-      find_all(:css, "td.CalendarDay").first.click
+      fill_in "moment_original_date", with: Date.current
 
       click_button "Create Moment"
 
@@ -38,16 +36,14 @@ feature "Creating a new moment", type: :feature do
       click_link "New Moment"
 
       attach_file(
-        "feature_image",
+        "moment_feature_image",
         Rails.root + "spec/fixtures/files/images/bible-1200x1500.jpg"
       )
 
       fill_in "Title", with: "A moment"
       find("trix-editor").click.set("Once upon a time...")
 
-      find(:css, "div.SingleDatePicker").click
-      assert_text(:visible, Date.today.strftime("%B"))
-      find_all(:css, "td.CalendarDay").first.click
+      fill_in "moment_original_date", with: Date.current
 
       click_button "Create Moment"
 

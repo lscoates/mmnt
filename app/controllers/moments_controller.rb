@@ -2,23 +2,21 @@ class MomentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_track, only: [:new, :create]
 
-  def new; end
+  def new
+    @moment = Moment.new
+    @errors = []
+  end
 
   def create
     result = Moments::Creator.new(track: @track, params: moment_params).call
 
-    respond_to do |format|
-      if result.success?
-        flash[:success] = "New moment successfully created!"
-
-        format.json do
-          render json: result.data, status: :created
-        end
-      else
-        format.json do
-          render json: { errors: result.data }, status: :unprocessable_entity
-        end
-      end
+    if result.success?
+      flash[:success] = "New moment successfully created!"
+      redirect_to track_path(@track)
+    else
+      @moment = result.data
+      @errors = result.errors
+      render :new, status: :unprocessable_entity
     end
   end
 

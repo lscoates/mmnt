@@ -1,1 +1,21 @@
-<%= react_component("track_form") %>
+<div class="row justify-content-center">
+  <div class="col col-md-6">
+    <%= form_with(model: @track) do |form| %>
+      <% if @errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
+          <ul>
+            <% @errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+      <br />
+      <%= form.submit "Create Track", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
