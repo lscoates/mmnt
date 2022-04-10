@@ -79,6 +79,16 @@ RSpec.configure do |config|
       )]
   end
 
+  Capybara.register_driver :selenium_chrome do |app|
+    Capybara::Selenium::Driver.new app,
+      browser: :chrome,
+      clear_session_storage: true,
+      clear_local_storage: true,
+      capabilities: [Selenium::WebDriver::Chrome::Options.new(
+        args: %w[disable-gpu no-sandbox window-size=3000,3000]
+      )]
+  end
+
   Capybara.javascript_driver = :selenium_chrome_headless
 
   Shoulda::Matchers.configure do |config|

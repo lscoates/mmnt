@@ -1,1 +1,36 @@
-<%= react_component("moment_form", track_id: @track.id) %>
+<div class="row justify-content-center">
+  <div class="col col-md-6">
+    <%= form_with(url: track_moments_path(@track, @moment), scope: :moment) do |form| %>
+      <% if @errors.any? %>
+        <div class="alert alert-danger" role="alert">
+          <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
+          <ul>
+            <% @errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form.file_field :feature_image %>
+      <br/>
+
+      <%= form.label :title %>
+      <%= form.text_field :title, class: "form-control" %>
+
+      <br/>
+
+      <%= form.label :body, "Describe your moment..." %>
+      <%= form.hidden_field :body %>
+      <trix-editor input="moment_body"></trix-editor>
+
+      <br/>
+
+      <%= form.label :original_date, "When did it happen?" %>
+      <%= form.date_field :original_date %>
+
+      <br />
+      <%= form.submit "Create Moment", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
