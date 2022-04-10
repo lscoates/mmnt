@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.3-node-browsers
+      - image: circleci/ruby:2.7.3-node
         environment:
           PGHOST: localhost
           PGUSER: mmnt
@@ -18,7 +18,7 @@ jobs:
       - restore_cache:
           name: Restore Gemfile Cache
           keys:
-            - mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
             - mmnt-
       - run:
           name: Install Dependencies
@@ -28,7 +28,7 @@ jobs:
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
       - save_cache:
           name: Save Gemfile Cache
-          key: mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
       - run:
@@ -39,7 +39,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: Setup Frontend
           command: |
@@ -47,7 +47,7 @@ jobs:
             yarn build-test
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
