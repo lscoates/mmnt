@@ -27,6 +27,7 @@ jobs:
             sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
+            bundle exec rake assets:precompile
       - save_cache:
           name: Save Gemfile Cache
           key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
