@@ -18,19 +18,33 @@ jobs:
       - restore_cache:
           name: Restore Gemfile Cache
           keys:
-            - mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
             - mmnt-
       - run:
           name: Install Dependencies
           command: |
             bundle install
+            sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
       - save_cache:
           name: Save Gemfile Cache
-          key: mmnt-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+          key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+      - run:
+          name: Swap node versions
+          command: |
+            set +e
+            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+            nvm install v16.14.2
+            nvm alias default 16.14.2
+
+            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
+            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
       - run:
           name: Setup Database
           command: |
@@ -39,7 +53,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
       - run:
           name: Setup Frontend
           command: |
@@ -47,7 +61,7 @@ jobs:
             yarn build-test
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
