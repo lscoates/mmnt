@@ -20,8 +20,7 @@ jobs:
           keys:
             - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
             - mmnt-{{ .Environment.CACHE_VERSION }}-
-            - mmnt-
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle install --clean --path vendor/bundle
       - save_cache:
           name: Save Gemfile Cache
           key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
