@@ -1,72 +1,63 @@
 version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.0
+  node: circleci/node@2
+
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.7.3-node-browsers
-        environment:
-          PGHOST: localhost
-          PGUSER: mmnt
-          RAILS_ENV: test
-      - image: circleci/postgres:13.2-ram
+      - image: cimg/ruby:2.7-node
+    steps:
+      - checkout
+      - ruby/install-deps
+      # Store bundle cache
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+  test:
+    parallelism: 3
+    docker:
+      - image: cimg/ruby:2.7-node
+      - image: circleci/postgres:13.6
         environment:
           POSTGRES_USER: mmnt
           POSTGRES_DB: mmnt_test
           POSTGRES_PASSWORD: "example"
-
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: circleci-demo-ruby
+      PGPASSWORD: ""
+      RAILS_ENV: test
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Gemfile Cache
-          keys:
-            - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
-            - mmnt-{{ .Environment.CACHE_VERSION }}-
-            - mmnt-
-      - run: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-      - save_cache:
-          name: Save Gemfile Cache
-          key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+      - ruby/install-deps
+      - node/install-packages:
+          pkg-manager: yarn
+          cache-key: "yarn.lock"
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
       - run:
           name: Install Dependencies
           command: |
             sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
             sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
-      - run:
-          name: Swap node versions
-          command: |
-            set +e
-            wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-            nvm install v16.14.2
-            nvm alias default 16.14.2
+      # Run rspec in parallel
+      - ruby/rspec-test
+      - ruby/rubocop-check
 
-            echo 'export NVM_DIR="$HOME/.nvm"' >> $BASH_ENV
-            echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> $BASH_ENV
-      - run:
-          name: Setup Database
-          command: |
-            bundle exec rails db:create
-            bundle exec rails db:schema:load
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Setup Frontend
-          command: |
-            yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-            yarn build
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Environment.CACHE_VERSION }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - run:
-          name: Run Rails Specs
-          command: |
-            bundle exec rake assets:precompile
-            bundle exec rspec
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
