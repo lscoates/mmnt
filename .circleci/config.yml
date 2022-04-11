@@ -15,17 +15,15 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          name: Restore Gemfile Cache
-          keys:
-            - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
-            - mmnt-{{ .Environment.CACHE_VERSION }}-
+      - type: cache-restore
+        keys:
+          - mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
+          - mmnt-{{ .Environment.CACHE_VERSION }}-
       - run: bundle install --clean --path vendor/bundle
-      - save_cache:
-          name: Save Gemfile Cache
-          key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+      - type: cache-save
+        key: mmnt-{{ .Environment.CACHE_VERSION }}-{{ checksum "Gemfile.lock" }}
+        paths:
+          - vendor/bundle
       - run:
           name: Install Dependencies
           command: |
