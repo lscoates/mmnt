@@ -12,7 +12,7 @@
       <div class="flex-none w-48 rounded-l-md gradient-bg text-7xl text-white text-center leading-[192px]">
         <% if moment.feature_image.present? %>
           <%= image_tag(
-            moment.feature_image.variant(resize_to_limit: [600, 600]).processed,
+            url_for(moment.feature_image),
             alt: moment.title,
             class: "w-full h-full rounded-l-md object-cover"
           ) %>
