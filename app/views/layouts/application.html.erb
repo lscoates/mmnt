@@ -10,12 +10,14 @@
     <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
+    <script src="https://kit.fontawesome.com/bd54375e54.js" crossorigin="anonymous"></script>
   </head>
 
   <body>
     <%= render "layouts/nav" %>
 
-    <div class="container">
+    <div class="p-5">
       <%= flash_messages %>
 
       <%= yield %>
