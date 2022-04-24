@@ -16,38 +16,38 @@ feature "Creating a new moment", type: :feature do
     before { sign_in user }
 
     scenario "successfully creating a new moment" do
-      visit "/tracks/#{track.id}"
+      expect {
+        visit "/tracks/#{track.id}"
 
-      click_link "New Moment"
+        click_link "New Moment"
 
-      fill_in "Title", with: "A moment"
-      find("trix-editor").click.set("Once upon a time...")
+        fill_in "Title", with: "A moment"
+        find("trix-editor").click.set("Once upon a time...")
 
-      fill_in "moment_original_date", with: Date.current
+        fill_in "moment_original_date", with: Date.current
 
-      click_button "Create Moment"
-
-      assert_text(:visible, "New moment successfully created!")
+        click_button "Create Moment"
+      }.to change { track.reload.moments.count }.by(1)
     end
 
     scenario "successfully creating a new moment with a photo" do
-      visit "/tracks/#{track.id}"
+      expect {
+        visit "/tracks/#{track.id}"
 
-      click_link "New Moment"
+        click_link "New Moment"
 
-      attach_file(
-        "moment_feature_image",
-        Rails.root + "spec/fixtures/files/images/bible-1200x1500.jpg"
-      )
+        attach_file(
+          "moment_feature_image",
+          Rails.root + "spec/fixtures/files/images/bible-1200x1500.jpg"
+        )
 
-      fill_in "Title", with: "A moment"
-      find("trix-editor").click.set("Once upon a time...")
+        fill_in "Title", with: "A moment"
+        find("trix-editor").click.set("Once upon a time...")
 
-      fill_in "moment_original_date", with: Date.current
+        fill_in "moment_original_date", with: Date.current
 
-      click_button "Create Moment"
-
-      assert_text(:visible, "New moment successfully created!")
+        click_button "Create Moment"
+      }.to change { track.reload.moments.count }.by(1)
     end
 
     scenario "when the form data is invalid" do

@@ -16,15 +16,15 @@ feature "Creating a new track", type: :feature do
     before { sign_in user }
 
     scenario "successfully creating a new track" do
-      visit "/tracks"
+      expect {
+        visit "/tracks"
 
-      assert_text(:visible, "Career")
-      click_link "New Track"
+        assert_text(:visible, "Career")
+        click_link "New Track"
 
-      fill_in "Name", with: "Family"
-      click_button "Create Track"
-
-      assert_text(:visible, "New track successfully created!")
+        fill_in "Name", with: "Family"
+        click_button "Create Track"
+      }.to change { user.reload.tracks.count }.by(1)
     end
 
     scenario "when the form data is invalid" do
