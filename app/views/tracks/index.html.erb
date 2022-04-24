@@ -1,20 +1,22 @@
 <div class="row">
   <div class="col">
-    <%= link_to "New Track", new_track_path, class: "btn btn-primary float-right" %>
+    <%= link_to "New Track", new_track_path, class: "button-primary float-right" %>
   </div>
 </div>
 
-<div class="row">
+<div class="grid grid-cols-1 gap-10 lg:grid-cols-3 mt-[50px]">
   <% @tracks.each do |track| %>
-    <div class="col track-container">
-      <%= link_to track_path(track) do %>
-        <div class="track-card">
-          <h5 class="card-title">
-            <%= track.name %>
-          </h5>
-          <p class="card-text"></p>
+    <%= link_to track_path(track) do %>
+      <div class="flex shadow-md h-48 rounded-l-md">
+        <div class="flex-none w-32 rounded-l-md gradient-bg text-7xl text-white text-center leading-[192px]">
+          <%= track.name[0].upcase %>
         </div>
-      <% end %>
-    </div>
+        <div class="flex-auto p-6">
+          <div class="text-xl pb-2 border-b border-slate-100">
+            <%= track.name %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </div>

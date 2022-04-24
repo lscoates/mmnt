@@ -1,34 +1,37 @@
 <div class="row">
   <div class="col">
-    <%= link_to "New Moment", new_track_moment_path(@track), class: "btn btn-primary float-right" %>
+    <%= link_to "New Moment", new_track_moment_path(@track), class: "button-primary float-right" %>
   </div>
 </div>
 
 <h1><%= @track.name %></h1>
 
-<% @track.moments.each do |moment| %>
-  <div class="row moment-card">
-    <div class="col-sm-12 col-md-4 moment-img">
-      <% if moment.feature_image.present? %>
-        <%= image_tag(
-          moment.feature_image.variant(resize_to_limit: [600, 600]).processed,
-          alt: moment.title
-        ) %>
-      <% end %>
+<div class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-[50px]">
+  <% @track.moments.each do |moment| %>
+    <div class="flex shadow-md h-full min-h-48 rounded-l-md">
+      <div class="flex-none w-48 rounded-l-md gradient-bg text-7xl text-white text-center leading-[192px]">
+        <% if moment.feature_image.present? %>
+          <%= image_tag(
+            moment.feature_image.variant(resize_to_limit: [600, 600]).processed,
+            alt: moment.title,
+            class: "w-full h-full rounded-l-md object-cover"
+          ) %>
+        <% end %>
+      </div>
+      <div class="flex-auto p-6">
+        <div class="text-xl pb-2 mb-5 border-b border-slate-100">
+          <h4>
+            <%= moment.title %> |
+            <small>
+              <%= moment.original_date.strftime("%m/%d/%Y") %>
+            </small>
+          </h4>
+        </div>
+        <p><%= moment.content %></p>
+      </div>
     </div>
-
-    <div class="col-sm-12 col-md-8 moment-body">
-      <h4>
-        <%= moment.title %> |
-        <small>
-          <%= moment.original_date.strftime("%m/%d/%Y") %>
-        </small>
-      </h4>
-
-      <%= moment.content %>
-    </div>
-  </div>
-<% end %>
+  <% end %>
+</div>
 
 <% if @track.moments.empty? %>
   Track your first moment!
