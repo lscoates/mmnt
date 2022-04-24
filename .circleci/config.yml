@@ -32,7 +32,6 @@ jobs:
           command: |
             sudo apt update
             sudo apt-get install -qq -o Acquire::Retries=3 imagemagick graphicsmagick
-            sudo apt-get install --fix-missing -qq -o Acquire::Retries=3 libvips
       - run:
           name: Swap node versions
           command: |
