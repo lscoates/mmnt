@@ -1,35 +1,33 @@
-<div class="row justify-content-center">
-  <div class="col col-md-6">
-    <%= form_with(url: track_moments_path(@track, @moment), scope: :moment) do |form| %>
-      <% if @errors.any? %>
-        <div class="alert alert-danger" role="alert">
-          <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
-          <ul>
-            <% @errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= form.file_field :feature_image %>
-      <br/>
-
-      <%= form.label :title %>
-      <%= form.text_field :title, class: "form-control" %>
-
-      <br/>
-
-      <%= form.label :content, "Describe your moment..." %>
-      <%= form.rich_text_area :content %>
-
-      <br/>
-
-      <%= form.label :original_date, "When did it happen?" %>
-      <%= form.date_field :original_date %>
-
-      <br />
-      <%= form.submit "Create Moment", class: "button-primary" %>
+<%= form_with(url: track_moments_path(@track, @moment), scope: :moment) do |form| %>
+  <div class="w-full lg:w-1/2 flex flex-col space-y-4">
+    <% if @errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
+        <ul>
+          <% @errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+
+    <%= form.file_field :feature_image %>
+
+    <div>
+      <%= form.label :title %>
+      <%= form.text_field :title, class: "form-input" %>
+    </div>
+
+    <div>
+      <%= form.label :content, "Describe your moment..." %>
+      <%= form.rich_text_area :content, class: "form-input" %>
+    </div>
+
+    <div>
+      <%= form.label :original_date, "When did it happen?" %>
+      <%= form.date_field :original_date, class: "form-input" %>
+    </div>
+
+    <%= form.submit "Create Moment", class: "button-primary" %>
   </div>
-</div>
+<% end %>

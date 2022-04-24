@@ -1,21 +1,21 @@
-<div class="row justify-content-center">
-  <div class="col col-md-6">
-    <%= form_with(model: @track) do |form| %>
-      <% if @errors.any? %>
-        <div class="alert alert-danger" role="alert">
-          <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
-          <ul>
-            <% @errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <%= form.label :name %>
-      <%= form.text_field :name, class: "form-control" %>
-      <br />
-      <%= form.submit "Create Track", class: "button-primary" %>
+<%= form_with(model: @track) do |form| %>
+  <div class="w-full lg:w-1/2 flex flex-col space-y-4">
+    <% if @errors.any? %>
+      <div class="alert alert-danger" role="alert">
+        <%= pluralize(@errors.count, "error") %> prohibited this record from being saved:
+        <ul>
+          <% @errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
+
+    <div>
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-input" %>
+    </div>
+
+    <%= form.submit "Create Track", class: "button-primary" %>
   </div>
-</div>
+<% end %>
