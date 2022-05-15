@@ -19,13 +19,14 @@
         <% end %>
       </div>
       <div class="flex-auto p-6">
-        <div class="text-xl pb-2 mb-5 border-b border-slate-100">
+        <div class="flex text-xl pb-2 mb-5 border-b border-slate-100">
           <h4>
             <%= moment.title %> |
             <span class="text-sm text-slate-400">
               <%= moment.original_date.strftime("%m/%d/%Y") %>
             </span>
           </h4>
+          <%= link_to "edit", edit_track_moment_path(@track, moment), class: "ml-auto text-xs text-slate-300 align-middle !leading-loose" %>
         </div>
         <p><%= moment.content %></p>
       </div>
