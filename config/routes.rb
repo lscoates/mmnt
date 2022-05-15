@@ -9,6 +9,6 @@ Rails.application.routes.draw do
   end
 
   resources :tracks, only: [:index, :show, :new, :create] do
-    resources :moments, only: [:new, :create]
+    resources :moments, only: [:new, :create, :edit, :update]
   end
 end

@@ -92,3 +92,6 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+# Custom matchers
+RSpec::Matchers.define_negated_matcher :not_change, :change

@@ -9,7 +9,7 @@
 <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 mt-[50px]">
   <% @track.moments.each do |moment| %>
     <div class="flex flex-col shadow-lg h-full min-h-48 rounded-lg lg:flex-row">
-      <div class="flex-none w-full max-h-48 gradient-bg text-7xl text-white text-center leading-[192px] lg:w-48 lg:max-h-full">
+      <div class="flex-none w-full max-h-96 rounded-l-lg gradient-bg text-7xl text-white text-center leading-[192px] lg:w-48 lg:max-h-full lg:rounded-none lg:rounded-l-lg">
         <% if moment.feature_image.present? %>
           <%= image_tag(
             url_for(moment.feature_image.variant(resize_to_limit: [600, 600]).processed),
@@ -19,13 +19,14 @@
         <% end %>
       </div>
       <div class="flex-auto p-6">
-        <div class="text-xl pb-2 mb-5 border-b border-slate-100">
+        <div class="flex text-xl pb-2 mb-5 border-b border-slate-100">
           <h4>
             <%= moment.title %> |
             <span class="text-sm text-slate-400">
               <%= moment.original_date.strftime("%m/%d/%Y") %>
             </span>
           </h4>
+          <%= link_to "edit", edit_track_moment_path(@track, moment), class: "ml-auto text-xs text-slate-300 align-middle !leading-loose" %>
         </div>
         <p><%= moment.content %></p>
       </div>
